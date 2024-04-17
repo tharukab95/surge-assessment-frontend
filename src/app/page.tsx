@@ -2,10 +2,16 @@
 
 import { NobelLaureate } from "@/models/NobelLaureat";
 import LaureateCard from "./components/LaureateCard";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { getLaureates } from "@/queries/laureate-api";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import FilterBar from "./components/FilterBar";
+import { useSearchParams } from "next/navigation";
 
 // async function getData() {
 //   const res = await fetch(
@@ -21,10 +27,18 @@ import { useEffect } from "react";
 
 export default function Home() {
   // const data = await getData();
+  const searchParams = useSearchParams();
+  const gender = searchParams.get("gender");
+  const birth = searchParams.get("birthDate");
+  const death = searchParams.get("deathDate");
+  const category = searchParams.get("nobelPrizeCategory");
+
+  const queryCLient = useQueryClient();
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ["laureates"],
-    queryFn: getLaureates,
+    queryFn: ({ pageParam }) =>
+      getLaureates({ pageParam, gender, birth, death, category }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPage,
   });
@@ -37,12 +51,19 @@ export default function Home() {
     }
   }, [fetchNextPage, inView]);
 
+  useEffect(() => {
+    if (searchParams) {
+      queryCLient.invalidateQueries({ queryKey: ["laureates"] });
+    }
+  }, [searchParams, queryCLient]);
+
   console.log(data);
 
   return (
     <main className="bg-gray-100 mx-auto px-4 sm:px-6">
-      <div className="min-h-screen flex justify-center items-center py-24 px-16">
-        <div className="py-24 px-16">
+      <div className="min-h-screen justify-center items-center py-6 px-16">
+        <FilterBar />
+        <div className="py-4 px-16">
           {data?.pages.map((page) => {
             return (
               <div key={page.currentPage} className="mt-4">
