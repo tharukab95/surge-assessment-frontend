@@ -18,7 +18,7 @@ export default async function Laureat({ params }: { params: { id: string } }) {
   const laureate = (await getLaureat(params.id))[0] as NobelLaureate;
 
   return (
-    <div className="h-screen bg-gray-100 flex-col justify-center items-start pt-8">
+    <div className="h-screen bg-gray-100 flex-col justify-center items-start pt-8  px-16">
       <div className="max-w-5xl text-stone-600 bg-white p-8 rounded-lg shadow-sm mx-auto">
         <h1 className="text-3xl font-bold mb-4">{laureate.knownName.en}</h1>
         <p className="text-lg text-gray-600 mb-4">

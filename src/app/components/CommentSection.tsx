@@ -34,14 +34,14 @@ const CommentSection = ({ laureateId }: { laureateId: string }) => {
 
   return (
     <>
-      <div className="border border-t-2 mt-4 w-3/5 mx-auto"></div>
-      <div className="w-3/5 mx-auto mt-4">
+      <div className="border border-t-2 mt-4 md:w-3/5 mx-auto"></div>
+      <div className="md:w-3/5 mx-auto mt-4">
         <div className=" ">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex items-end gap-8"
           >
-            <div className="flex-grow">
+            <div className="flex-grow max-w-[500px]">
               <FormInput
                 register={register}
                 type={"text"}
