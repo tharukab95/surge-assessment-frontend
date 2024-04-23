@@ -45,7 +45,9 @@ export const getLaureates = async ({
   const { data } = await axiosPrivate.get<{
     laureates: NobelLaureate[];
     meta: { count: number };
-  }>(`/api/laureates?offset=${pageParam}&limit=12${filters}`);
+  }>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/laureates?offset=${pageParam}&limit=12${filters}`
+  );
 
   return {
     data: data.laureates,

@@ -19,17 +19,20 @@ const nextAuthOptions = (req: any, res: any) => {
         async authorize(credentials, req) {
           // Add logic here to look up the user from the credentials supplied
 
-          const response = await fetch("http://localhost:4000/auth/login", {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: credentials?.username,
-              password: credentials?.password,
-            }),
-          });
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`,
+            {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: credentials?.username,
+                password: credentials?.password,
+              }),
+            }
+          );
 
           // const cookies = response.headers['set-cookie']
           const cookies = response.headers.getSetCookie();
