@@ -4,7 +4,6 @@ import FormInput from "./FormInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createComment, getComments } from "@/queries/comments-api";
-import { useSession } from "next-auth/react";
 import Comment from "./Comment";
 
 interface IFormInput {
@@ -13,7 +12,6 @@ interface IFormInput {
 
 const CommentSection = ({ laureateId }: { laureateId: string }) => {
   const { register, handleSubmit } = useForm<IFormInput>();
-  const { data: session } = useSession();
   const queryCLient = useQueryClient();
 
   const { data: comments } = useQuery({
@@ -21,19 +19,17 @@ const CommentSection = ({ laureateId }: { laureateId: string }) => {
     queryFn: () => getComments(laureateId),
   });
 
-  const { isSuccess, error, mutate } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: createComment,
     onSuccess: () => {
       queryCLient.invalidateQueries({ queryKey: ["comments"] });
     },
   });
 
-  console.log("comments: ", comments);
-
   const onSubmit: SubmitHandler<IFormInput> = async ({
     comment,
   }: IFormInput) => {
-    mutate({ comment, laureateId, token: session?.user.accessToken! });
+    mutate({ comment, laureateId });
   };
 
   return (

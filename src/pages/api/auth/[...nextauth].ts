@@ -32,9 +32,9 @@ const nextAuthOptions = (req: any, res: any) => {
           });
 
           // const cookies = response.headers['set-cookie']
-          const cookies = (await response.headers).getSetCookie();
+          const cookies = response.headers.getSetCookie();
 
-          res.setHeader("jwt", cookies);
+          res.setHeader("Set-Cookie", cookies);
 
           const user = await response.json();
 

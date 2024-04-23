@@ -10,21 +10,24 @@ const AppBar = () => {
 
   return (
     // <div className="bg-gradient-to-b from-orange-50 to-orange-100 px-48 py-2 flex justify-end gap-8">
-    // {/* <Link href={"/"}>Home</Link> */}
     <>
-      <div className="px-48 py-2 flex justify-end gap-12 bg-gray-100 items-center">
-        <div className="flex items-center gap-2">
-          {session?.user?.username && (
-            <img src="user_profile_pic.png" width={35} height={35} />
-          )}
-          <p className="text-stone-800">{session?.user?.username} </p>
-        </div>
+      <div className="flex px-48 py-2 bg-gray-100 items-center justify-between">
+        <Link className="text-gray-800 flex-grow" href={"/"}>
+          Home
+        </Link>
+        <div className="flex justify-end gap-12  items-center">
+          <div className="flex items-center gap-2">
+            {session?.user?.username && (
+              <img src="user_profile_pic.png" width={35} height={35} />
+            )}
+            <p className="text-stone-800">{session?.user?.username} </p>
+          </div>
 
-        <LoginButton />
+          <LoginButton />
+        </div>
       </div>
       <div className="border-b-2"></div>
     </>
-    // </div>
   );
 };
 

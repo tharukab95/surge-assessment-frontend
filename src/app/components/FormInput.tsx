@@ -7,13 +7,7 @@ type props = {
   label: string;
 };
 
-const FilterFormInput = ({
-  register,
-  type,
-  id,
-  label,
-  ...inputProps
-}: props) => {
+const FormInput = ({ register, type, id, label, ...inputProps }: props) => {
   return (
     <div>
       <label htmlFor={id} className="block text-sm text-gray-700">
@@ -34,4 +28,4 @@ const FilterFormInput = ({
   );
 };
 
-export default FilterFormInput;
+export default FormInput;

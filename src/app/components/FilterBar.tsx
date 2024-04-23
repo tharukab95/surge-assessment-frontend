@@ -2,7 +2,7 @@
 
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Select from "react-select";
-import FilterFormInput from "./FilterFormInput";
+import FormInput from "./FormInput";
 import { useRouter } from "next/navigation";
 
 interface IFormInput {
@@ -93,13 +93,13 @@ const FilterBar = () => {
           />
         </div>
       </div>
-      <FilterFormInput
+      <FormInput
         register={register}
         type="text"
         id="birth"
         label="Birth year"
       />
-      <FilterFormInput
+      <FormInput
         register={register}
         type="text"
         id="death"
