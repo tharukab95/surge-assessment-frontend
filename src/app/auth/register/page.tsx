@@ -21,8 +21,6 @@ const RegisterPage = () => {
     email,
     password,
   }: IFormInput) => {
-    console.log(`${username} ${password}`);
-
     if (!recaptcha) {
       return;
     }

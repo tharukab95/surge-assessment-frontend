@@ -2,8 +2,9 @@
 import FormInput from "@/app/components/FormInput";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface IFormInput {
   username: string;
@@ -12,12 +13,15 @@ interface IFormInput {
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm<IFormInput>();
+  const [recaptcha, setRecaptcha] = useState(false);
 
   const onSubmit: SubmitHandler<IFormInput> = async ({
     username,
     password,
   }: IFormInput) => {
-    console.log(`${username} ${password}`);
+    if (!recaptcha) {
+      return;
+    }
 
     const result = await signIn("credentials", {
       username,
@@ -47,6 +51,12 @@ const LoginPage = () => {
             type="password"
             id="password"
             label="Password"
+          />
+          <ReCAPTCHA
+            sitekey="6Lc6vMMpAAAAAO-WIWiTSsVFCaDTJVf7kIPTrPjh"
+            onChange={() => {
+              setRecaptcha(true);
+            }}
           />
           <button
             type="submit"
