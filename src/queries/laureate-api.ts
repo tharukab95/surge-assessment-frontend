@@ -25,22 +25,11 @@ export const getLaureates = async ({
   currentPage: number;
   nextPage: number | null;
 }> => {
-  console.log("pageParam: ", pageParam);
-
   let filters = `${gender !== null ? "&gender=" + gender : ""}${
     birth ? "&birthDate=" + birth : ""
   }${death ? "&deathDate=" + death : ""}${
     category !== null ? "&nobelPrizeCategory=" + category : ""
   }`;
-
-  console.log("filters: ", filters);
-
-  // const { data } = await axios.get<{
-  //   laureates: NobelLaureate[];
-  //   meta: { count: number };
-  // }>(
-  //   `http://api.nobelprize.org/2.0/laureates?offset=${pageParam}&limit=12${filters}`
-  // );
 
   const { data } = await axiosPrivate.get<{
     laureates: NobelLaureate[];

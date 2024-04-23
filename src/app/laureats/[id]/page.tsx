@@ -1,11 +1,15 @@
 import CommentSection from "@/app/components/CommentSection";
 import { NobelLaureate } from "@/models/NobelLaureat";
+import axiosPrivate from "@/utils/axiosPrivate";
+import axios from "axios";
 import { Open_Sans } from "next/font/google";
 
 const openSans = Open_Sans({ style: "italic", subsets: ["latin"] });
 
 async function getLaureat(id: string) {
-  const res = await fetch(`http://api.nobelprize.org/2.0/laureate/${id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/laureate/${id}`
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -64,15 +68,6 @@ export default async function Laureat({ params }: { params: { id: string } }) {
           </a>
         </div>
       </div>
-
-      {/* <div className="w-2/5 border-l-2 border-slate-800">
-        <iframe
-          src={laureate.wikipedia.english}
-          width="100%"
-          height="600px"
-          title="External Website"
-        ></iframe>
-      </div> */}
       <CommentSection laureateId={laureate.id} />
     </div>
   );

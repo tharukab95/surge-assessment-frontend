@@ -11,7 +11,7 @@ interface IFormInput {
 }
 
 const CommentSection = ({ laureateId }: { laureateId: string }) => {
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const { register, handleSubmit, reset } = useForm<IFormInput>();
   const queryCLient = useQueryClient();
 
   const { data: comments } = useQuery({
@@ -23,6 +23,7 @@ const CommentSection = ({ laureateId }: { laureateId: string }) => {
     mutationFn: createComment,
     onSuccess: () => {
       queryCLient.invalidateQueries({ queryKey: ["comments"] });
+      reset();
     },
   });
 

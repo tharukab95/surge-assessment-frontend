@@ -9,23 +9,10 @@ import { Suspense, useEffect, useMemo } from "react";
 
 import { useSearchParams } from "next/navigation";
 import FilterBar from "./FilterBar";
-// import useAxiosAuth from "@/hooks/useAxiosAuth";
-
-// async function getData() {
-//   const res = await fetch(
-//     "http://api.nobelprize.org/2.0/laureates?offset=0&limit=10"
-//   );
-
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch data");
-//   }
-
-//   return res.json();
-// }
+import { useSession } from "next-auth/react";
 
 const Laureates = () => {
-  // const data = await getData();
-  // const axiosAuth = useAxiosAuth();
+  const { data: session } = useSession();
 
   const searchParams = useSearchParams();
   const gender = searchParams?.get("gender");
@@ -39,24 +26,7 @@ const Laureates = () => {
     queryKey: ["laureates"],
     queryFn: ({ pageParam }) =>
       getLaureates({ pageParam, gender, birth, death, category }),
-    // {
-    //   let filters = `${gender !== null ? "&gender=" + gender : ""}${
-    //     birth ? "&birthDate=" + birth : ""
-    //   }${death ? "&deathDate=" + death : ""}${
-    //     category !== null ? "&nobelPrizeCategory=" + category : ""
-    //   }`;
-    //   const { data } = await axiosAuth.get<{
-    //     laureates: NobelLaureate[];
-    //     meta: { count: number };
-    //   }>(`/api/laureates?offset=${pageParam}&limit=12${filters}`);
-    //   console.log("my data: ", data);
-    //   return {
-    //     data: data.laureates,
-    //     currentPage: pageParam,
-    //     nextPage:
-    //       pageParam + OFFSET < data.meta.count ? pageParam + OFFSET : null,
-    //   };
-    // },
+
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPage,
   });
@@ -81,6 +51,16 @@ const Laureates = () => {
     <div className="min-h-screen justify-center items-center py-6 px-16">
       <FilterBar />
       <div className="py-4 px-16">
+        {!session?.user.username && (
+          <div className="text-center flex flex-col gap-6 mt-10">
+            <p className="text-orange-500 text-xl">
+              Welcome to Laureates Website
+            </p>
+            <p className="text-gray-700 text-lg">
+              Please sign-in to view content
+            </p>
+          </div>
+        )}
         {data?.pages.map((page) => {
           return (
             <div key={page.currentPage} className="mt-4">

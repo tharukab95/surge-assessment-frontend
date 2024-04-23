@@ -28,16 +28,11 @@ axiosPrivate.interceptors.response.use(
           withCredentials: true,
         }
       );
-      // .catch((err) => {
-      //   localStorage.removeItem("accessToken");
-      //   return Promise.reject(err);
-      // });
 
       let accessToken = res.data.accessToken;
-
       localStorage.setItem("accessToken", accessToken);
-      //   return axios(error.config);
       prevRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+
       return axiosPrivate(prevRequest);
     }
     return Promise.reject(error);

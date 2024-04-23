@@ -9,13 +9,12 @@ const AppBar = () => {
   console.log({ session });
 
   return (
-    // <div className="bg-gradient-to-b from-orange-50 to-orange-100 px-48 py-2 flex justify-end gap-8">
     <>
-      <div className="flex px-48 py-2 bg-gray-100 items-center justify-between">
+      <div className="flex px-40 py-2 bg-gray-100 items-center justify-between">
         <Link className="text-gray-800 flex-grow" href={"/"}>
           Home
         </Link>
-        <div className="flex justify-end gap-12  items-center">
+        <div className="flex justify-end gap-12  items-center mr-8">
           <div className="flex items-center gap-2">
             {session?.user?.username && (
               <img src="user_profile_pic.png" width={35} height={35} />
