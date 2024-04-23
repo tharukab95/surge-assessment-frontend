@@ -7,7 +7,7 @@ locals {
   demo_app_cluster_name        = "demo-frontend-app-cluster"
   availability_zones           = ["us-east-1a", "us-east-1b", "us-east-1c"]
   demo_app_task_famliy         = "demo-frontend-app-task"
-  container_port               = 4000
+  container_port               = 3000
   demo_app_task_name           = "demo-frontend-app-task"
   ecs_task_execution_role_name = "demo-frontend-app-task-execution-role"
 
