@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axiosPrivate = axios.create({});
+const axiosPrivate = axios.create({ baseURL: "http://localhost:4000" });
 
 axiosPrivate.interceptors.request.use(
   (config: any) => {
@@ -20,8 +20,8 @@ axiosPrivate.interceptors.response.use(
     if (error?.response?.status === 401 && !prevRequest?.sent) {
       prevRequest.sent = true;
 
-      const res = await axios.post("http://localhost:4000/auth/refresh", {
-        refreshToken: localStorage.get("refreshToken"),
+      const res = await axios.get("http://localhost:4000/auth/refresh", {
+        withCredentials: true,
       });
       // .catch((err) => {
       //   localStorage.removeItem("accessToken");

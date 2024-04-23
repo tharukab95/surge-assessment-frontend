@@ -1,14 +1,17 @@
 import { NobelLaureate } from "@/models/NobelLaureat";
-import axios from "axios";
+// import { client } from "@/utils/axiosClient";
+import axiosPrivate from "@/utils/axiosPrivate";
+// import axiosPrivate from "@/utils/axiosPrivate";
+// import axios from "axios";
 
 let OFFSET = 12;
 
 type ILaureatesInput = {
   pageParam: number;
-  gender: string | null;
-  birth: string | null;
-  death: string | null;
-  category: string | null;
+  gender: string | null | undefined;
+  birth: string | null | undefined;
+  death: string | null | undefined;
+  category: string | null | undefined;
 };
 
 export const getLaureates = async ({
@@ -32,12 +35,17 @@ export const getLaureates = async ({
 
   console.log("filters: ", filters);
 
-  const { data } = await axios.get<{
+  // const { data } = await axios.get<{
+  //   laureates: NobelLaureate[];
+  //   meta: { count: number };
+  // }>(
+  //   `http://api.nobelprize.org/2.0/laureates?offset=${pageParam}&limit=12${filters}`
+  // );
+
+  const { data } = await axiosPrivate.get<{
     laureates: NobelLaureate[];
     meta: { count: number };
-  }>(
-    `http://api.nobelprize.org/2.0/laureates?offset=${pageParam}&limit=12${filters}`
-  );
+  }>(`/api/laureates?offset=${pageParam}&limit=12${filters}`);
 
   return {
     data: data.laureates,
